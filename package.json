@@ -5,7 +5,7 @@
   "description": "HTML Admin Template",
   "scripts": {
     "start": "webpack-dev-server",
-    "dev": "webpack-dashboard -t 'Project' -- webpack-dev-server",
+    "dev": "webpack-dashboard -t 'Project' --max_old_space_size=2048 -- webpack-dev-server",
     "clean": "shx rm -rf ./build",
     "build": "npm run clean && cross-env NODE_ENV=\"production\" webpack",
     "preview": "cross-env NODE_ENV=\"production\" webpack-dev-server",

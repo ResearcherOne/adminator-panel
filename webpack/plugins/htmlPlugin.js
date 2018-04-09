@@ -12,6 +12,7 @@ const titles = {
   'chat': 'Chat',
   'compose': 'Compose',
   'datatable': 'Datatable',
+  'panel_index': 'Panel_index',
   'email': 'Email',
   'forms': 'Forms',
   'google-maps': 'Google Maps',

@@ -10,6 +10,7 @@ import './skycons';
 import './vectorMaps';
 import './chat';
 import './datatable';
+import './panel_index';
 import './datepicker';
 import './email';
 import './fullcalendar';
