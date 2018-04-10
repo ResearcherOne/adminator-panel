@@ -7,11 +7,20 @@ export default (function () {
   
   function getTableRows(result) {
 		var resultString = "";
+		var totalLikes = 0;
+		var totalDislikes = 0;
 		for(var i=0; i<result.length; i++) {
 			var happiness = "unhappy";
 			var date = new Date(result[i].submissionDate);
 			var formatted_date = date.getFullYear() + "/" + (date.getMonth() + 1) +"/" + date.getDate()+" "; //need to add 0 as prefix to 1-9 months and days
-			if (result[i].isLiked == 1) happiness = "happy";
+			if (result[i].isLiked == 1) {
+				happiness = "happy";
+				totalLikes++;
+			}
+			else if(result[i].isLiked == 0) {
+				totalDislikes++;
+			}
+			
 			if(result[i].mail) {
 				resultString += "<tr>"+
 									"<td>"+formatted_date+"</td>"+
@@ -27,6 +36,7 @@ export default (function () {
 								"</tr>";
 			}
 		}
+		
 		return resultString;
 	}
 
@@ -35,6 +45,7 @@ export default (function () {
 		$('#'+table_id+' > tbody').append(getTableRows(data_array));
 		$('#'+table_id).DataTable();
 	}
+	
 	function runApplication() {
 		
 		//made this change otherwise tables were empty
