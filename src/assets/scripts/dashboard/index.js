@@ -1,27 +1,11 @@
-import '../styles/index.scss';
 import * as $ from 'jquery';
 import 'datatables';
 
-import './masonry';
-// import './charts';
-import './popover';
-import './scrollbar';
-import './search';
-// import './sidebar';
-import './skycons';
-// import './vectorMaps';
-// import './chat';
-import './datatable';
-// import './panel_index';
-// import './datepicker';
-// import './email';
-// import './fullcalendar';
-// import './googleMaps';
-import './utils';
-import './signin'
-
-
-function getTableRows(result) {
+export default (function () {
+  //$('#dataTable2').DataTable();
+  
+  
+  function getTableRows(result) {
 		var resultString = "";
 		for(var i=0; i<result.length; i++) {
 			var happiness = "unhappy";
@@ -51,10 +35,9 @@ function getTableRows(result) {
 		$('#'+table_id+' > tbody').append(getTableRows(data_array));
 		$('#'+table_id).DataTable();
 	}
-	
 	function runApplication() {
 		
-			//made this change otherwise tables were empty
+		//made this change otherwise tables were empty
 		$.ajaxSetup({
              crossDomain: true,
              xhrFields: {
@@ -71,4 +54,5 @@ function getTableRows(result) {
 			});
 		});
 	}
-runApplication();
+	runApplication();
+}());

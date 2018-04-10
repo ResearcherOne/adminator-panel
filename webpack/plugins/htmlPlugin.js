@@ -4,25 +4,10 @@ const
   HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const titles = {
-//  'index': 'Dashboard',
-//  'blank': 'Blank',
-//  'buttons': 'Buttons',
-//  'calendar': 'Calendar',
-//  'charts': 'Charts',
-//  'chat': 'Chat',
-//  'compose': 'Compose',
-//  'datatable': 'Datatable',
-  'panel_index': 'Panel_index',
-//  'email': 'Email',
-//  'forms': 'Forms',
-//  'google-maps': 'Google Maps',
-  'signin': 'Signin',
-//  'signup': 'Signup',
-//  'ui': 'UI',
-//  'vector-maps': 'Vector Maps',
-//  '404': '404',
-//  '500': '500',
-//  'basic-table': 'Basic Table',
+ 'index': 'Dashboard',
+ 'signin': 'Signin',
+ '404': '404',
+ '500': '500',
 };
 
 module.exports = Object.keys(titles).map(title => {
