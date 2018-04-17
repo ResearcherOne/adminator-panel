@@ -1,3 +1,4 @@
+var config = "https://api.dusuncembu.com";
 import * as $ from 'jquery';
 import 'datatables';
 
@@ -47,23 +48,35 @@ export default (function () {
 	}
 	
 	function runApplication() {
-		
-		//made this change otherwise tables were empty
-		$.ajaxSetup({
-             crossDomain: true,
-             xhrFields: {
-                 withCredentials: true
-             }
+		console.log("PATHNAME:"+window.location.pathname);
+		if(window.location.pathname==="/admin/") {
+			$.ajaxSetup({
+				 crossDomain: true,
+				 xhrFields: {
+					 withCredentials: true
+				 }
+				});
+			$.get(config+"/akkol/company/getCompletedFormList/50/0", function(data, status){
+				if(!data.isSucceed) window.location.href = "/admin/signin.html";
+				else console.log("DATA FETCH SUCCEED");
+				initTable("completed-forms-table", data.extras.result);
+				$.get(config+"/akkol/company/getAnonymousFormList/50/0", function(data, status){
+					initTable("anonymous-forms-table", data.extras.result);
+					if(data.isSucceed) $("#dusuncembu-username").text("Akkol");
+					else if(data.isSucceed) $("#dusuncembu-username").text("Not Logged In");
+				});
 			});
-			
-		$.get("http://163.172.158.47:5000/akkol/company/getCompletedFormList/50/0", function(data, status){
-			console.log("Data: " + JSON.stringify(data) + "\nStatus: " + status);
-			initTable("completed-forms-table", data.extras.result);
-			$.get("http://163.172.158.47:5000/akkol/company/getAnonymousFormList/50/0", function(data, status){
-				console.log("Data: " + JSON.stringify(data) + "\nStatus: " + status);
-				initTable("anonymous-forms-table", data.extras.result);
+			$(document).on('click', '#dusuncembu-logout', function () {
+				console.log("TROLOHO");
+				$.get(config+"/akkol/company/logout", function(data, status){
+					if(data.isSucceed) window.location.href = "/admin/signin.html";
+					else alert("Unable to log out.");
+				});
+				return false;
 			});
-		});
+		} else {
+			console.log("NOT /admin/");
+		}
 	}
 	runApplication();
 }());

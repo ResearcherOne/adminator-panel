@@ -1,3 +1,5 @@
+//import config from '../dusuncembu-config.js';
+var config = "https://api.dusuncembu.com";
 import * as $ from 'jquery';
 
 export default (function () {
@@ -17,11 +19,11 @@ export default (function () {
              }
 			});
 		 
-			$.post( "http://163.172.158.47:5000/akkol/company/login", { username: username, password: password })
+			$.post( config+"/akkol/company/login", { username: username, password: password })
 				.done(function( data ) {
-				console.log(data.isSucceed)
+				if(!data.isSucceed) alert("Invalid Username or Password");
 				if(data.isSucceed){
-					window.location.href = "http://163.172.158.47:3000/";
+					window.location.href = "/admin";
 				}
 				else {
 				

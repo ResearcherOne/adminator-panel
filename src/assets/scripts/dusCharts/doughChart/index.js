@@ -1,3 +1,4 @@
+var config = "https://api.dusuncembu.com";
 import * as $ from 'jquery';
 import Chart from 'chart.js';	
 
@@ -10,7 +11,7 @@ export default (function() {
 	var myChart = new Chart(CHART, {
 		type: 'doughnut',
 		data: {
-			labels: ["Dislike", "Like"],
+			labels: ["Unhappy", "Happy"],
 			datasets: [{
 				label: '# of Votes',
 				data: [0,0],
@@ -32,7 +33,7 @@ export default (function() {
 					},
 					title: {
 						display: true,
-						text: 'Overview: Like-Dislike'
+						text: 'Customer Satisfaction Chart'
 					},
 					animation: {
 						animateScale: true,
@@ -40,12 +41,6 @@ export default (function() {
 					}
 		}
 	});
-	console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-	console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-	console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-	console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-	console.log(myChart.data.datasets[0].data[0]);
-	console.log(myChart.data.datasets[0].data[1]);
 
 	
 	function addData(chart, data1, data2) {
@@ -77,8 +72,6 @@ export default (function() {
 		}
 
 	function fetchGraphData() {
-			
-			//made this change otherwise tables were empty
 			$.ajaxSetup({
 				 crossDomain: true,
 				 xhrFields: {
@@ -86,16 +79,20 @@ export default (function() {
 				 }
 				});
 				
-			$.get("http://163.172.158.47:5000/akkol/company/getCompletedFormList/50/0", function(data1, status){
-				console.log("Data: " + JSON.stringify(data1) + "\nStatus: " + status);
-				$.get("http://163.172.158.47:5000/akkol/company/getAnonymousFormList/50/0", function(data2, status){
-					console.log("Data: " + JSON.stringify(data2) + "\nStatus: " + status);
-					countLikes(data1.extras.result,data2.extras.result);
-					console.log("++++totalLikes+++++++++++++++++"+totalLikes);
-					console.log("++++totalLikes+++++++++++++++++"+totalDislikes);
-					addData(myChart, totalDislikes, totalLikes);
-				});
+			$.get(config+"/akkol/company/getCompletedFormList/50/0", function(data1, status){
+				if(data1.isSucceed) {
+					$.get(config+"/akkol/company/getAnonymousFormList/50/0", function(data2, status){
+						countLikes(data1.extras.result,data2.extras.result);
+						addData(myChart, totalDislikes, totalLikes);
+					});
+				} else {
+					console.log("Script of dusChart says unable to fetch data");
+				}
 			});
 		}
-	fetchGraphData();
+	if(window.location.pathname==="/admin/") {
+		fetchGraphData();
+	} else {
+		console.log("Script of dusChart says that it is not dashboard");
+	}
 })();
