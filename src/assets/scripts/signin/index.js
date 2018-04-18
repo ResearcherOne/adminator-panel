@@ -1,5 +1,5 @@
 //import config from '../dusuncembu-config.js';
-var config = "https://api.dusuncembu.com";
+var config = "http://163.172.158.47:5000";
 import * as $ from 'jquery';
 
 export default (function () {
@@ -9,8 +9,12 @@ export default (function () {
 		e.preventDefault();
 		
 		var $form = $(this),
+			company = $form.find("input[name='company']").val(),
 			username = $form.find("input[name='username']").val(),
 			password = $form.find("input[name='password']").val();
+			
+			localStorage.setItem('company', company);
+			localStorage.setItem('username', username);
 			
 			$.ajaxSetup({
              crossDomain: true,
@@ -19,7 +23,7 @@ export default (function () {
              }
 			});
 		 
-			$.post( config+"/akkol/company/login", { username: username, password: password })
+			$.post( config+"/"+company+"/company/login", { username: username, password: password })
 				.done(function( data ) {
 				if(!data.isSucceed) alert("Invalid Username or Password");
 				if(data.isSucceed){

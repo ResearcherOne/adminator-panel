@@ -1,4 +1,4 @@
-var config = "https://api.dusuncembu.com";
+var config = "http://163.172.158.47:5000";
 import * as $ from 'jquery';
 import Chart from 'chart.js';	
 
@@ -71,7 +71,7 @@ export default (function() {
 			}
 		}
 
-	function fetchGraphData() {
+	function fetchGraphData(company) {
 			$.ajaxSetup({
 				 crossDomain: true,
 				 xhrFields: {
@@ -79,9 +79,9 @@ export default (function() {
 				 }
 				});
 				
-			$.get(config+"/akkol/company/getCompletedFormList/50/0", function(data1, status){
+			$.get(config+"/"+company+"/company/getCompletedFormList/50/0", function(data1, status){
 				if(data1.isSucceed) {
-					$.get(config+"/akkol/company/getAnonymousFormList/50/0", function(data2, status){
+					$.get(config+"/"+company+"/company/getAnonymousFormList/50/0", function(data2, status){
 						countLikes(data1.extras.result,data2.extras.result);
 						addData(myChart, totalDislikes, totalLikes);
 					});
@@ -91,7 +91,8 @@ export default (function() {
 			});
 		}
 	if(window.location.pathname==="/admin/") {
-		fetchGraphData();
+		var company = localStorage.getItem('company');
+		fetchGraphData(company);
 	} else {
 		console.log("Script of dusChart says that it is not dashboard");
 	}

@@ -1,4 +1,4 @@
-var config = "https://api.dusuncembu.com";
+var config = "http://163.172.158.47:5000";
 import * as $ from 'jquery';
 import 'datatables';
 
@@ -47,28 +47,31 @@ export default (function () {
 		$('#'+table_id).DataTable();
 	}
 	
-	function runApplication() {
+	function runApplication(company, username) {
+		
 		console.log("PATHNAME:"+window.location.pathname);
 		if(window.location.pathname==="/admin/") {
+			
 			$.ajaxSetup({
 				 crossDomain: true,
 				 xhrFields: {
 					 withCredentials: true
 				 }
 				});
-			$.get(config+"/akkol/company/getCompletedFormList/50/0", function(data, status){
+				
+			$.get(config+"/"+company+"/company/getCompletedFormList/50/0", function(data, status){
 				if(!data.isSucceed) window.location.href = "/admin/signin.html";
 				else console.log("DATA FETCH SUCCEED");
 				initTable("completed-forms-table", data.extras.result);
-				$.get(config+"/akkol/company/getAnonymousFormList/50/0", function(data, status){
+				$.get(config+"/"+company+"/company/getAnonymousFormList/50/0", function(data, status){
 					initTable("anonymous-forms-table", data.extras.result);
-					if(data.isSucceed) $("#dusuncembu-username").text("Akkol");
+					if(data.isSucceed) $("#dusuncembu-username").text(username);
 					else if(data.isSucceed) $("#dusuncembu-username").text("Not Logged In");
 				});
 			});
 			$(document).on('click', '#dusuncembu-logout', function () {
 				console.log("TROLOHO");
-				$.get(config+"/akkol/company/logout", function(data, status){
+				$.get(config+"/"+company+"/company/logout", function(data, status){
 					if(data.isSucceed) window.location.href = "/admin/signin.html";
 					else alert("Unable to log out.");
 				});
@@ -78,5 +81,7 @@ export default (function () {
 			console.log("NOT /admin/");
 		}
 	}
-	runApplication();
+	var company = localStorage.getItem('company');
+	var username= localStorage.getItem('username');
+	runApplication(company, username);
 }());
