@@ -18,7 +18,20 @@ import './datatable';
 // import './fullcalendar';
 // import './googleMaps';
 import './utils';
-import './signin';
-import './dusCharts'
+import * as signinModule from "./signin";
+import * as chartsModule from "./dusCharts";
 //here are the table fetch functions
-import './dashboard'
+import * as dashboardModule from "./dashboard";
+
+
+if(window.location.pathname==="/admin/") {
+	console.log("This is /admin/")
+	dashboardModule.initializePage();
+	chartsModule.initializePage();
+} else if(window.location.pathname==="/admin/signin.html") {
+	console.log("This is /admin/signin.html")
+	signinModule.initializePage();
+	//run signin script
+} else {
+	console.log("NOT /admin/ or /admin/signin.html");
+}

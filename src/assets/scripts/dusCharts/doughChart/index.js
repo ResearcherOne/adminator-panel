@@ -1,9 +1,8 @@
-var config = "http://163.172.158.47:5000";
+var config = "https://api.dusuncembu.com";
 import * as $ from 'jquery';
 import Chart from 'chart.js';	
 
-
-export default (function() {
+function initializePage(){
 	var totalLikes = 0;
 	var totalDislikes = 0;
 	
@@ -96,4 +95,6 @@ export default (function() {
 	} else {
 		console.log("Script of dusChart says that it is not dashboard");
 	}
-})();
+}
+
+export {initializePage}; 
