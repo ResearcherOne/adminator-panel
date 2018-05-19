@@ -25,13 +25,15 @@ export default (function () {
 		 
 			$.post( config+"/"+company+"/company/login", { username: username, password: password })
 				.done(function( data ) {
-				if(!data.isSucceed) alert("Invalid Username or Password");
-				if(data.isSucceed){
-					window.location.href = "/admin";
-				}
-				else {
-				
-				}
+					if(data.isSucceed){
+						window.location.href = "/admin";
+					} else {
+						if(data.description==="The user is already logged in."){
+							window.location.href = "/admin";
+						} else {
+							alert("Invalid Username or Password");
+						}
+					}
 			});
 	})
  
