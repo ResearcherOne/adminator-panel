@@ -23,7 +23,7 @@ import * as chartsModule from "./dusCharts";
 //here are the table fetch functions
 import * as dashboardModule from "./dashboard";
 
-var apiUrl = "http://localhost:3000";
+var apiUrl = "http://localhost:5000";
 //"https://api.dusuncembu.com";
 
 if(window.location.pathname==="/dashboard.html") {
