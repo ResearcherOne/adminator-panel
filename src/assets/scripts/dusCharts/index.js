@@ -1,7 +1,7 @@
 import * as doughChartModule from "./doughChart";
 
-function initializePage(){
-	doughChartModule.initializePage();
+function initializePage(inputApiUrl){
+	doughChartModule.initializePage(inputApiUrl);
 }
 
 export {initializePage}; 

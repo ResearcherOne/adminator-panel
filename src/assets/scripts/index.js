@@ -23,15 +23,16 @@ import * as chartsModule from "./dusCharts";
 //here are the table fetch functions
 import * as dashboardModule from "./dashboard";
 
+var apiUrl = "http://localhost:3000";
+//"https://api.dusuncembu.com";
 
-if(window.location.pathname==="/admin/") {
-	console.log("This is /admin/")
-	dashboardModule.initializePage();
-	chartsModule.initializePage();
-} else if(window.location.pathname==="/admin/signin.html") {
-	console.log("This is /admin/signin.html")
-	signinModule.initializePage();
-	//run signin script
+if(window.location.pathname==="/dashboard.html") {
+	console.log("This is /")
+	dashboardModule.initializePage(apiUrl);
+	chartsModule.initializePage(apiUrl);
+} else if(window.location.pathname==="/" || window.location.pathname==="/index.html") {
+	console.log("This is /signin.html")
+	signinModule.initializePage(apiUrl);
 } else {
-	console.log("NOT /admin/ or /admin/signin.html");
+	console.log("NOT / or /signin.html");
 }

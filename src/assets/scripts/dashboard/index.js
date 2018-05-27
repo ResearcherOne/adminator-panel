@@ -1,4 +1,4 @@
-var config = "https://api.dusuncembu.com";
+var apiUrl = "";//"https://api.dusuncembu.com";
 import * as $ from 'jquery';
 import 'datatables';
 
@@ -37,6 +37,7 @@ function getTableRows(result) {
 	return resultString;
 }
 
+var loginPage = "/index.html";
 
 function initTable(table_id, data_array) {
 	$('#'+table_id+' > tbody').append(getTableRows(data_array));
@@ -46,7 +47,7 @@ function initTable(table_id, data_array) {
 function runApplication(company, username) {
 	
 	console.log("PATHNAME:"+window.location.pathname);
-	if(window.location.pathname==="/admin/") {
+	if(window.location.pathname==="/dashboard.html") {
 		
 		$.ajaxSetup({
 			 crossDomain: true,
@@ -55,11 +56,11 @@ function runApplication(company, username) {
 			 }
 			});
 			
-		$.get(config+"/"+company+"/company/getCompletedFormList/50/0", function(data, status){
-			if(!data.isSucceed) window.location.href = "/admin/signin.html";
+		$.get(apiUrl+"/"+company+"/company/getCompletedFormList/50/0", function(data, status){
+			if(!data.isSucceed) window.location.href = loginPage;
 			else console.log("DATA FETCH SUCCEED");
 			initTable("completed-forms-table", data.extras.result);
-			$.get(config+"/"+company+"/company/getAnonymousFormList/50/0", function(data, status){
+			$.get(apiUrl+"/"+company+"/company/getAnonymousFormList/50/0", function(data, status){
 				initTable("anonymous-forms-table", data.extras.result);
 				if(data.isSucceed) $("#dusuncembu-username").text(username);
 				else if(data.isSucceed) $("#dusuncembu-username").text("Not Logged In");
@@ -67,8 +68,8 @@ function runApplication(company, username) {
 		});
 		$(document).on('click', '#dusuncembu-logout', function () {
 			console.log("TROLOHO");
-			$.get(config+"/"+company+"/company/logout", function(data, status){
-				if(data.isSucceed) window.location.href = "/admin/signin.html";
+			$.get(apiUrl+"/"+company+"/company/logout", function(data, status){
+				if(data.isSucceed) window.location.href = loginPage;
 				else alert("Unable to log out.");
 			});
 			return false;
@@ -78,7 +79,8 @@ function runApplication(company, username) {
 	}
 }
 
-function initializePage(){
+function initializePage(inputApiUrl){
+	apiUrl = inputApiUrl
 	var company = localStorage.getItem('company');
 	var username= localStorage.getItem('username');
 	runApplication(company, username);

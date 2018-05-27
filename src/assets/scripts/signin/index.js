@@ -1,8 +1,10 @@
-//import config from '../dusuncembu-config.js';
-var config = "https://api.dusuncembu.com";
+var apiUrl = ""; //"https://api.dusuncembu.com";
+var loginSucceedForwardPage = "/dashboard.html";
+
 import * as $ from 'jquery';
 
-function initializePage(){
+function initializePage(inputApiUrl){
+		apiUrl = inputApiUrl
 		console.log("Page is Initialized");
 		$("#login-form").submit( function(e) {
 			
@@ -23,13 +25,13 @@ function initializePage(){
 				 }
 				});
 			 
-				$.post( config+"/"+company+"/company/login", { username: username, password: password })
+				$.post( apiUrl+"/"+company+"/company/login", { username: username, password: password })
 					.done(function( data ) {
 						if(data.isSucceed){
-							window.location.href = "/admin";
+							window.location.href = loginSucceedForwardPage;
 						} else {
 							if(data.description==="The user is already logged in."){
-								window.location.href = "/admin";
+								window.location.href = loginSucceedForwardPage;
 							} else {
 								alert("Invalid Username or Password");
 							}

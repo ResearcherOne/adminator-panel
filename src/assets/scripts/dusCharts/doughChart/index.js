@@ -1,8 +1,9 @@
-var config = "https://api.dusuncembu.com";
+var apiUrl = "";//"https://api.dusuncembu.com";
 import * as $ from 'jquery';
 import Chart from 'chart.js';	
 
-function initializePage(){
+function initializePage(inputApiUrl){
+	apiUrl = inputApiUrl
 	var totalLikes = 0;
 	var totalDislikes = 0;
 	
@@ -78,9 +79,9 @@ function initializePage(){
 				 }
 				});
 				
-			$.get(config+"/"+company+"/company/getCompletedFormList/50/0", function(data1, status){
+			$.get(apiUrl+"/"+company+"/company/getCompletedFormList/50/0", function(data1, status){
 				if(data1.isSucceed) {
-					$.get(config+"/"+company+"/company/getAnonymousFormList/50/0", function(data2, status){
+					$.get(apiUrl+"/"+company+"/company/getAnonymousFormList/50/0", function(data2, status){
 						countLikes(data1.extras.result,data2.extras.result);
 						addData(myChart, totalDislikes, totalLikes);
 					});
@@ -89,12 +90,8 @@ function initializePage(){
 				}
 			});
 		}
-	if(window.location.pathname==="/admin/") {
-		var company = localStorage.getItem('company');
-		fetchGraphData(company);
-	} else {
-		console.log("Script of dusChart says that it is not dashboard");
-	}
+	var company = localStorage.getItem('company');
+	fetchGraphData(company);
 }
 
 export {initializePage}; 
